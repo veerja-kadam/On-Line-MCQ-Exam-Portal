@@ -1,0 +1,180 @@
+@model dynamic  
+@{  
+    ViewBag.Title = "Home Page";  
+}  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QuizMIS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">QuizMIS</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span> 
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                       <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div class="container">
+                <main role="main" class="pb-3">
+
+                    <h1> Create Quiz </h1>
+                    <br/>
+                    <h4>Add Quiz Details </h4>
+                    <form method="post" asp-action="UpdateTime" >  
+                            <div class="form-group">
+                                <label afor="QuizTitle">Quiz Title</label>
+                                <input type="text" name="QuizTitle"  class="form-control" id="formGroupExampleInput" placeholder="Example input" value=@ViewData["QuizTitle"] >
+                            </div>
+
+                            <div class="form-group">
+                                <label afor="StartTime">Start Time</label>
+                                <input type="text" name="StartTime"  class="form-control" id="formGroupExampleInput" placeholder="Example input" value=@ViewData["StartTime"] >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="EndTime">End Time</label>
+                                <input type="text" name="EndTime" class="form-control" placeholder="Example input" value=@ViewData["EndTime"] >
+                            </div>
+                            
+                            <input type="hidden" name="QuizId" value=@ViewData["QuizId"]  />
+                            <input type="submit" value="submit" class="btn btn-primary" />
+                    </form>
+                   
+                    <br/><br/><br/>
+                    <h3>Add Question </h3>
+                    <form method="post" asp-action="Create" >
+                        <div class="row">
+        
+                            <div class="col-md-12"> 
+                                <div class="form-group">
+                                    <label for="Title">Title</label>
+                                    <input type="text" style="width:45%" name="Title" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                </div>
+                            </div>
+                        
+                            <div class="col-sm-12 col-md-6"> 
+                                <div class="form-group">
+                                    <label for="Option1">Option 1</label>
+                                    <input type="text" name="Option1" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6"> 
+                                <div class="form-group">
+                                    <label for="Option2">Option 2</label>
+                                    <input type="text" name="Option2" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12 col-md-6"> 
+                                <div class="form-group">
+                                    <label for="Option3">Option3</label>
+                                    <input type="text" name="Option3" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="Option4">Option 4</label>
+                                    <input type="text" name="Option4" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                </div>
+                            </div>
+
+                             <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="Option4">Correct Answer</label>
+                                    <input type="text" name="CorrectAnswer" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                </div>
+                            </div>
+
+                              <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="Option4">Points</label>
+                                    <input type="number" name="Points" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                </div>
+                            </div>
+
+                        </div>
+                        <input type="hidden" name="QuizId" value=@ViewData["QuizId"]  />
+                        <input type="submit" value="Add Question" class="btn btn-primary" />
+                    </form>
+
+                    <br/>
+                    <h4> Questions in Current Quiz</h4>
+
+                     <table class="table table-striped">
+                        <thead>
+                            <tr>
+                            <th scope="col">QuestionID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Option1</th>
+                            <th scope="col">Option2</th>
+                            <th scope="col">Option3</th>
+                            <th scope="col">Option4</th>
+                            <th scope="col">Correct Answer</th>
+                            <th scope="col">Points</th>
+                            <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             @foreach (Question question in Model.Question) {
+                            <tr>
+                             
+                                <th scope="row">  @question.QuestionId</th>
+                                    <td> @question.Title</td>
+                                    <td> @question.Option1</td>
+                                    <td> @question.Option2</td>
+                                    <td> @question.Option3</td>
+                                    <td> @question.Option4</td>
+                                    <td> @question.CorrectAnswer</td>
+                                    <td> @question.Points</td>
+                                    <td style="display:flex;" > 
+                                    <form method="post" asp-action="Edit" >
+                                        <input type="hidden" name="QuestionId" value="@question.QuestionId" />
+                                        <input type="hidden" name="QuizId" value=@ViewData["QuizId"]  />
+                                        <input type="submit" class="btn btn-success" value="Edit" />
+                                    </form>
+                                        <form method="post" asp-action="Delete"> 
+                                            <input type="hidden" name="QuestionId" value="@question.QuestionId" />
+                                            <input type="hidden" name="QuizId" value=@ViewData["QuizId"]  />
+                                            <input type="submit" class="btn btn-danger" value="Delete" />
+                                        </form>
+                                    </td>
+                            </tr>
+                              }
+                        </tbody>
+                    </table>
+                </main>
+            </div>
+        </main>     
+    </div>
+
+    <footer class="border-top footer text-muted">
+        
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

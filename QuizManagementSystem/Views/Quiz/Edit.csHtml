@@ -1,0 +1,114 @@
+@model QuizMIS.Models.Question
+@{  
+    ViewData["Title"]="Edit Question";
+}  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QuizMIS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">QuizMIS</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span> 
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                       <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div class="container">
+                <main role="main" class="pb-3">
+
+                    <h1> Update Question </h1>
+                   
+                    <br/><br/><br/>
+                    <h3>Add Question </h3>
+                    <form method="post" asp-action="UpdateQuestion" >
+                        <div class="row">
+        
+                            <div class="col-md-12"> 
+                                <div class="form-group">
+                                    <label for="Title">Title</label>
+                                    <input type="text" style="width:45%" name="Title" class="form-control" id="formGroupExampleInput" placeholder="Example input" value="@Model.Title" >
+                                </div>
+                            </div>
+                        
+                            <div class="col-sm-12 col-md-6"> 
+                                <div class="form-group">
+                                    <label for="Option1">Option 1</label>
+                                    <input type="text" name="Option1" class="form-control" id="formGroupExampleInput" placeholder="Example input" value="@Model.Option1">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6"> 
+                                <div class="form-group">
+                                    <label for="Option2">Option 2</label>
+                                    <input type="text" name="Option2" class="form-control" id="formGroupExampleInput" placeholder="Example input" value="@Model.Option2">
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12 col-md-6"> 
+                                <div class="form-group">
+                                    <label for="Option3">Option3</label>
+                                    <input type="text" name="Option3" class="form-control" id="formGroupExampleInput" placeholder="Example input" value="@Model.Option3">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="Option4">Option 4</label>
+                                    <input type="text" name="Option4" class="form-control" id="formGroupExampleInput" placeholder="Example input" value="@Model.Option4">
+                                </div>
+                            </div>
+
+                             <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="Option4">Correct Answer</label>
+                                    <input type="text" name="CorrectAnswer" class="form-control" id="formGroupExampleInput" placeholder="Example input" value="@Model.CorrectAnswer">
+                                </div>
+                            </div>
+
+                              <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="Option4">Points</label>
+                                    <input type="number" name="Points" class="form-control" id="formGroupExampleInput" placeholder="Example input" value="@Model.Points">
+                                </div>
+                            </div>
+
+                        </div>
+                        <input type="hidden" name="QuizId" value=@ViewData["QuizId"]  />
+                        <input type="hidden" name="QuestionId" value=@ViewData["QuestionId"]  />
+                        <input type="submit" value="Update Question" class="btn btn-primary" />
+                    </form>
+                </main>
+            </div>
+        </main>     
+    </div>
+
+    <footer class="border-top footer text-muted">
+        
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
