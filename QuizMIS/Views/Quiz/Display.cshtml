@@ -1,0 +1,144 @@
+@model dynamic  
+@{  
+    ViewBag.Title = "Home Page";  
+}  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QuizMIS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">QuizMIS</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span> 
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                       <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div class="container">
+                <main role="main" class="pb-3">
+                    <h4>Quiz Details </h4>
+                    <br/><br/><br/>
+                    <h4> Questions in Current Quiz</h4>
+                     <table class="table table-striped">
+                        <thead>
+                            <tr>
+                            <th scope="col">QuestionID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Option1</th>
+                            <th scope="col">Option2</th>
+                            <th scope="col">Option3</th>
+                            <th scope="col">Option4</th>
+                            <th scope="col">Points</th>
+                            <th scope="col">Correct Answer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <!-- <form method="post" > -->
+                             @foreach (Question question in Model.Question) {
+                            <tr>
+                             
+                                <th scope="row" class="questionId" >  @question.QuestionId</th>
+                                    <td> @question.Title</td>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="rb" type="radio" name="@question.QuestionId" id="option1" value="@question.Option1"/>@question.Option1
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="rb" type="radio" name="@question.QuestionId" id="option2" value="@question.Option2"/>@question.Option2
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="rb" type="radio" name="@question.QuestionId" id="option3" value="@question.Option3"/>@question.Option3
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="rb" type="radio" name="@question.QuestionId" id="option4" value="@question.Option4"/>@question.Option4
+                                        </div>
+                                    </td>
+                                    <td class="points" > @question.Points</td>
+                                    <td>
+                                            <label class="rb" id="correctAnswer" class="correctAnswer" name="@question.QuestionId" style="display: none; color: forestgreen; font: bold;">@question.CorrectAnswer</label>
+                                    </td>
+                            </tr>
+                              }
+                            <button id="but1" type="button" class="btn btn-success" value="Submit" onclick="displayresults();" style="display: block;">Submit</button>
+                            
+                        <!-- </form> -->
+                            <label id="lbluseranswer"></label>
+                            <script>
+                               
+                                function displayresults(){
+                                    var x = document.getElementsByTagName('label');
+                                    for (i=0;i<x.length;i++){
+                                        if (x[i].style.display === "none") {
+                                        x[i].style.display = "block";
+                                        } else {
+                                         x[i].style.display = "none";
+                                        }
+                                    }
+                                    document.getElementById("lbluseranswer").innerHTML = "";
+                                    var result = document.getElementsByTagName('input');
+                                    var answers=[];
+                                    
+                                    for (j=0;j<result.length;j++){
+                                        if(result[j].checked)
+                                            answers.push({ 
+                                                "QuestionId":result[j].name.toString() ,
+                                                "selectedAnswer":result[j].value.toString()
+                                            })
+                                        result[j].disabled=true;
+                                        if(result[i].checked){
+                                            document.getElementById("lbluseranswer").innerHTML+="Q "+result[j].name+") "+result[j].value+" || ";
+                                        }
+                                    }
+                                    answers=JSON.stringify(answers)
+console.log(window.location.href);
+                                    console.log(answers)
+                                    const url=window.location.href;
+                                    const quizId=url.substring(url.lastIndexOf('/')+1);
+                                    const StudentId=url.slice(url.lastIndexOf('=')+1).toString();
+                                    console.log(StudentId)
+                                    window.location.href=`https://localhost:5001/Quiz/SubmitQuiz/${quizId}&answers=${answers}`
+                                    
+                                }
+                            </script>
+                        </tbody>
+                    </table>
+                </main>
+            </div>
+        </main>     
+    </div>
+
+    <footer class="border-top footer text-muted">
+        
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
